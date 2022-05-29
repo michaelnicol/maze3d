@@ -1,5 +1,5 @@
 {
-  "name": "maze3d",
+  "name": "@michaelnicol/maze3d",
   "version": "1.0.0",
   "description": "A 3D Matrix Maze Algorithm that uses breadth first search",
   "main": "maze3d.js",
@@ -11,8 +11,8 @@
     "url": "git+https://github.com/michaelnicol/maze3d.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Michael Nicol",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/michaelnicol/maze3d/issues"
   },
