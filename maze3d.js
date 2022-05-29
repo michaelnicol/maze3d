@@ -22,11 +22,13 @@ export default class Maze3D {
         voidSpace: [],
         voidSpaceCharacter: "#"
       }
-      for (let key of Object.keys(constraints)) {
-        if (this.constraints.hasOwnProperty(key)) {
-          this.constraints[key] = constraints[key]
+      if (typeof constraints === "Object") {
+        for (let key of Object.keys(constraints)) {
+          if (this.constraints.hasOwnProperty(key)) {
+            this.constraints[key] = constraints[key]
+          }
         }
-      }
+    }
       /**
        * @public {Array} mazeTemplate - 3D Matrix containing template (barrier space barrier pattern) the maze is generated from.
       */
