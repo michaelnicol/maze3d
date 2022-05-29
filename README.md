@@ -2,6 +2,8 @@
 
 A 3D Maze solving algorithem that implements breath-first search.
 
+![Thumbnail image of solved mave, with barriers removed so path can be scene](https://i.imgur.com/acM1uYM.png)
+
 The Maze3D class accepts a object for the maze constraints with the following properties:
 
 ```
