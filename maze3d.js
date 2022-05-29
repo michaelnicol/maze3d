@@ -4,6 +4,10 @@ export default class Maze3D {
       * @param {Object} constriants - Contains the constructor data for the maze: barrierChacater, spaceChacater, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
     */
     constructor(constraints) {
+      /**
+       * @public {Object} contraints - Contains the Maze3D data for the maze: barrierChacater, spaceChacater, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
+       */ 
+      // Below is the default constraints for the maze
       this.constraints = {
         barrierChacater: "X",
         spaceChacater: " ", 
@@ -45,7 +49,7 @@ export default class Maze3D {
       this.path = []
     }
     /** 
-      * @function _findSurrondingValues - Internal Function: Used to find surronding values to a given cell
+      * @private @function _findSurrondingValues - Internal Function: Used to find surronding values to a given cell
       * @param {number} d - Depth index for the cell
       * @param {number} r - Row index for the cell
       * @param {number} c - Column index for the cell
@@ -81,21 +85,21 @@ export default class Maze3D {
       };
     }
     /** 
-       * @function _coordInConstraints - Internal Function: Checks if a coordinate is within the constraints of the maze
-       * @param {arr} - Coordinate in DRC (ZYX) order
+       * @private @function _coordInConstraints - Internal Function: Checks if a coordinate is within the constraints of the maze
+       * @param {Array<Number>} arr - Coordinate in DRC (ZYX) order
        * @returns boolean
      */
     _coordInConstraints(arr) {
       return !(arr[0] < 0 || arr[1] < 0 || arr[2] < 0 || arr[0] >= this.constraints.depth || arr[1] >= this.constraints.height || arr[2] >= this.constraints.width)
     }
     /** 
-      * @function _deepCopy - Internal Function: Returns deep copy of a given object (uses JSON - No circular logic)
-      * @param {object} obj - Object to be deep copied
+      * @private @function _deepCopy - Internal Function: Returns deep copy of a given object (uses JSON - No circular logic)
+      * @param {Object} obj - Object to be deep copied
       * @returns {Object}
     */
     _deepCopy(obj) { return JSON.parse(JSON.stringify(obj)) }
     /** 
-      * @function _mapMaze - Internal Function: Higher order function that maps over a 3D matrix
+      * @private @function _mapMaze - Internal Function: Higher order function that maps over a 3D matrix
       * @param {Array} arr3DRef - Pass by Reference 3D matrix 
       * @param {function} callback - Callback function to be applied to each cell in the 3D matrix
       * @returns void
@@ -110,7 +114,7 @@ export default class Maze3D {
       }
     }
     /** 
-    * @function _randomInt - Internal Function: Returns random number from 0 to max-1. If max is 1, it generates a 50/50 chance by using a seperate random function. If the input is zero, it will return zero for 100% chance.
+    * @private @function _randomInt - Internal Function: Returns random number from 0 to max-1. If max is 1, it generates a 50/50 chance by using a seperate random function. If the input is zero, it will return zero for 100% chance.
     * @param {number} max - Max value for the function
     * @returns {number}
     */
@@ -118,7 +122,7 @@ export default class Maze3D {
       return max > 1 ? Math.floor(Math.random() * max) : max === 0 ? 0 : (Math.random() < 0.5 ? 0 : 1)
     }
     /** 
-     * @function _arr2dContainsArr1d - Checks if a 1D Matrix is inside of a 2D Matrix
+     * @private @function _arr2dContainsArr1d - Checks if a 1D Matrix is inside of a 2D Matrix
      * @param {Array} arr2d - 2D Array
      * @param {Array} arr1d - 1D Array
      * @returns boolean
@@ -133,14 +137,14 @@ export default class Maze3D {
       return false
     }
     /** 
-     * @function _isCharBlockade - Internal Function: Checks if the given chacacter is a barrier or void
+     * @private @function _isCharBlockade - Internal Function: Checks if the given chacacter is a barrier or void
      * @returns boolean
      */
     _isCharBlockade(char) {
       return char === this.constraints.barrierChacater || char === this.constraints.voidChacater
     }
     /** 
-     * @function generateMazeTemplate - Generates a maze building template stored within a 3D matrix. Uses a barrer space barrier pattern in all 3 demensions. Fills specified void areas with void chacacters. Stores in this.mazeTemplate.
+     * @public @function generateMazeTemplate - Generates a maze building template stored within a 3D matrix. Uses a barrer space barrier pattern in all 3 demensions. Fills specified void areas with void chacacters. Stores in this.mazeTemplate.
      * @returns void
      */
     generateMazeTemplate() {
@@ -189,7 +193,7 @@ export default class Maze3D {
       this.barrierMaze = this._deepCopy(this.mazeTemplate)
     }
     /** 
-    * @function generateMazeTemplate - Randomly generates barriers within the maze using constraints chance. Stores in this.barrierMaze.
+    * @public @function generateMazeTemplate - Randomly generates barriers within the maze using constraints chance. Stores in this.barrierMaze.
     * @returns void
     */
     generateMazeBarriers() {
@@ -236,7 +240,7 @@ export default class Maze3D {
       this._mapMaze(this.barrierMaze, cleanBarriers)
     }
     /** 
-    * @function solveMaze - Solves the maze given a start and end coordinate. Stores results in this.path DRC (ZYX) order.
+    * @public @function solveMaze - Solves the maze given a start and end coordinate. Stores results in this.path DRC (ZYX) order.
     * @param {Array} start - 1D Array in DRC (ZYX) order for where the path should start
     * @param {Array} end - 1D Array in DRC (ZYX) order for where the path should end
     * @returns void
@@ -353,7 +357,7 @@ export default class Maze3D {
       );
     }
     /** 
-      * @function traceMazeWithPath - Traces the path of the maze on the 3D Matrix using the constraints path symbol. Stored in this.tracedBarrierMaze.
+      * @public @function traceMazeWithPath - Traces the path of the maze on the 3D Matrix using the constraints path symbol. Stored in this.tracedBarrierMaze.
       * @returns boolean - Returns false and fails to trace if path length was zero. Returns true if maze was successfully traced.
       */
     traceMazeWithPath() {
