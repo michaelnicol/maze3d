@@ -2,7 +2,7 @@
   "name": "maze3d",
   "version": "1.0.0",
   "description": "A 3D Matrix Maze Algorithm that uses breadth first search",
-  "main": "index.js",
+  "main": "maze3d.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
