@@ -1,0 +1,20 @@
+{
+  "name": "maze3d",
+  "version": "1.0.0",
+  "description": "A 3D Matrix Maze Algorithm that uses breadth first search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelnicol/maze3d.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelnicol/maze3d/issues"
+  },
+  "homepage": "https://github.com/michaelnicol/maze3d#readme"
+}
