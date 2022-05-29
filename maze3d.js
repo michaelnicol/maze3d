@@ -22,13 +22,21 @@ export default class Maze3D {
         voidSpace: [],
         voidSpaceCharacter: "#"
       }
-      if (typeof constraints === "Object") {
+      if (typeof constraints === "object") {
         for (let key of Object.keys(constraints)) {
           if (this.constraints.hasOwnProperty(key)) {
             this.constraints[key] = constraints[key]
           }
         }
-    }
+      }
+      let Characters = [this.constraints.barrierCharacter, this.constraints.spaceCharacter, this.constraints.pathCharacter, this.constraints.voidSpaceCharacter];
+      for (let i = 0; i < Characters.length; i++) {
+        for (let j = 0; j < Characters.length; j++) {
+          if (Characters[i] === Characters[j] && i !== j) {
+            throw new TypeError("Error in Maze Constraints: " + Characters[i] + " maze Character is duplicated across multiple properties " + JSON.stringify(Characters) +".")
+          }
+        }
+      }
       /**
        * @public {Array} mazeTemplate - 3D Matrix containing template (barrier space barrier pattern) the maze is generated from.
       */
