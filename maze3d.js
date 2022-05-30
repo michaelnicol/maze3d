@@ -9,9 +9,9 @@ class Maze3D {
        */ 
       // Below is the default constraints for the maze
       this.constraints = {
-        barrierChacater: "X",
-        spaceChacater: " ", 
-        pathSymbol: "O",
+        barrierCharacter: "X",
+        spaceCharacter: " ", 
+        pathCharacter: "O",
         width: 5,
         height: 5,
         depth: 5,
