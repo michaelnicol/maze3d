@@ -2,7 +2,9 @@
 
 A 3D Maze solving algorithem that implements breath-first search.
 
-```npm install maze3d```
+```
+npm install maze3d
+```
 
 ![Thumbnail image of solved mave, with barriers removed so path can be scene](https://i.imgur.com/acM1uYM.png)
 
@@ -390,7 +392,7 @@ In the examples above, a chance of 1 was used for all axis. Increasing the chanc
 
 ![Maze Density Sliders](https://i.imgur.com/acM1uYM.png)
 
-The program above is a WIP and will be avaible as a package in future versions. Current size is limited to 50x50x50 for performance, but this can be changed by forking the sandbox and changing the values on lines 445, 452, and 458 for the dat.gui in World.js
+The program above is a WIP and will be a package in future versions. Current size is limited to 50x50x50 for performance, but this can be changed by forking the sandbox and changing the values on lines 445, 452, and 458 for the dat.gui in World.js
 
 ```
 mazeSize
