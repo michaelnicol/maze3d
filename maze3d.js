@@ -1,11 +1,11 @@
 class Maze3D {
     /**
       * @constructor
-      * @param {Object} constriants - Contains the constructor data for the maze: barrierChacater, spaceChacater, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
+      * @param {Object} constriants - Contains the constructor data for the maze: barrierCharacter, spaceCharacter, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
     */
     constructor(constraints) {
       /**
-       * @public {Object} contraints - Contains the Maze3D data for the maze: barrierChacater, spaceChacater, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
+       * @public {Object} contraints - Contains the Maze3D data for the maze: barrierCharacter, spaceCharacter, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
        */ 
       // Below is the default constraints for the maze
       this.constraints = {
@@ -151,7 +151,7 @@ class Maze3D {
      * @returns boolean
      */
     _isCharBlockade(char) {
-      return char === this.constraints.barrierChacater || char === this.constraints.voidChacater
+      return char === this.constraints.barrierCharacter || char === this.constraints.voidChacater
     }
     /** 
      * @public @function generateMazeTemplate - Generates a maze building template stored within a 3D matrix. Uses a barrer space barrier pattern in all 3 demensions. Fills specified void areas with void chacacters. Stores in this.mazeTemplate.
@@ -172,12 +172,12 @@ class Maze3D {
             // Barrier Space Barrier Row
             if (h % 2 === 0) {
               for (let w = 0; w < this.constraints.width; w++) {
-                w % 2 === 0 ? column.push(this.constraints.barrierChacater) : column.push(this.constraints.spaceChacater)
+                w % 2 === 0 ? column.push(this.constraints.barrierCharacter) : column.push(this.constraints.spaceCharacter)
               }
               // All Space Row
             } else {
               for (let w = 0; w < this.constraints.width; w++) {
-                column.push(this.constraints.spaceChacater)
+                column.push(this.constraints.spaceCharacter)
               }
             }
             layer.push(column)
@@ -187,7 +187,7 @@ class Maze3D {
           for (let h = 0; h < this.constraints.height; h++) {
             let column = []
             for (let w = 0; w < this.constraints.width; w++) {
-              column.push(this.constraints.spaceChacater)
+              column.push(this.constraints.spaceCharacter)
             }
             layer.push(column)
           }
@@ -214,20 +214,20 @@ class Maze3D {
       // Checks barriers and adds barrers randomly
       const checkBarriers = (cellValue, d, h, w) => {
         let tempSurrondingValues = this._findSurrondingValues(d, h, w, this.barrierMaze)
-        if (cellValue === this.constraints.spaceChacater) {
+        if (cellValue === this.constraints.spaceCharacter) {
           if (this._isCharBlockade(tempSurrondingValues.top.value) && this._isCharBlockade(tempSurrondingValues.bottom.value)) {
-            return this._randomInt(this.constraints.yChance) === 0 ? this.constraints.barrierChacater : this.constraints.spaceChacater
+            return this._randomInt(this.constraints.yChance) === 0 ? this.constraints.barrierCharacter : this.constraints.spaceCharacter
           }
           else if (this._isCharBlockade(tempSurrondingValues.right.value) && this._isCharBlockade(tempSurrondingValues.left.value)) {
-            return this._randomInt(this.constraints.xChance) === 0 ? this.constraints.barrierChacater : this.constraints.spaceChacater
+            return this._randomInt(this.constraints.xChance) === 0 ? this.constraints.barrierCharacter : this.constraints.spaceCharacter
           }
           else if (this._isCharBlockade(tempSurrondingValues.back.value) && this._isCharBlockade(tempSurrondingValues.front.value)) {
-            return this._randomInt(this.constraints.zChance) === 0 ? this.constraints.barrierChacater : this.constraints.spaceChacater
+            return this._randomInt(this.constraints.zChance) === 0 ? this.constraints.barrierCharacter : this.constraints.spaceCharacter
             // The if statements above produce through holes every other block on all three demsinions. 
             // This statement should remove those holes mathmatically
           } else if (d % 2 === 1 || (h % 2 === 1 && w % 2 === 1)) {
             // If its a space layer (vertical hole) or a xy horizntoal hole, then use a diagChance
-            return this._randomInt(this.constraints.diagChance) === 0 ? this.constraints.barrierChacater : this.constraints.spaceChacater
+            return this._randomInt(this.constraints.diagChance) === 0 ? this.constraints.barrierCharacter : this.constraints.spaceCharacter
           }
         }
         return cellValue
@@ -236,10 +236,10 @@ class Maze3D {
       // Cleans barriers not touching anything else
       const cleanBarriers = (cellValue, d, h, w) => {
         let tempSurrondingValues = this._findSurrondingValues(d, h, w, this.barrierMaze)
-        if (cellValue === this.constraints.barrierChacater) {
+        if (cellValue === this.constraints.barrierCharacter) {
           let flag = false
           for (let key of Object.keys(tempSurrondingValues)) {
-            if (tempSurrondingValues[key].value === this.constraints.barrierChacater) {
+            if (tempSurrondingValues[key].value === this.constraints.barrierCharacter) {
               flag = true
             }
           }
@@ -302,7 +302,7 @@ class Maze3D {
           for (let key of Object.keys(tempSurrondingValues)) {
             // Using stritctly equal is vital
             if (
-              tempSurrondingValues[key].value === this.constraints.spaceChacater
+              tempSurrondingValues[key].value === this.constraints.spaceCharacter
             ) {
               // If it is a number
               const { coord } = tempSurrondingValues[key];
@@ -363,7 +363,7 @@ class Maze3D {
       this.mappedNumberMaze = this._deepCopy(this.barrierMaze);
       // Clean Up the Maze of any numbers
       this._mapMaze(this.barrierMaze, (cellValue) =>
-        typeof cellValue === "number" ? this.constraints.spaceChacater : cellValue
+        typeof cellValue === "number" ? this.constraints.spaceCharacter : cellValue
       );
     }
     /** 
@@ -378,7 +378,7 @@ class Maze3D {
       this._mapMaze(this.tracedBarrierMaze, (cellValue, d, h, w) => {
         for (let i = 0; i < this.path.length; i++) {
           if (this.path[i][0] === d && this.path[i][1] === h && this.path[i][2] === w) {
-            return this.constraints.pathSymbol
+            return this.constraints.pathCharacter
           }
         }
         return cellValue
