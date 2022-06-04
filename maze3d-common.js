@@ -385,6 +385,4 @@ class Maze3D {
       })
     }
   }
-module.exports = {
-  Maze3D: Maze3D
-}
+module.exports.Maze3D = Maze3D

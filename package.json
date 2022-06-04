@@ -5,7 +5,8 @@
   "main": "maze3d-common.js",
   "scripts": {
     "runCommon": "node maze3d-common.js",
-    "runES": "node maze3d-es.js"
+    "runES": "node maze3d-es.js",
+    "runCommonExample": "node import-examples/node-common.js"
   },
   "repository": {
     "type": "git",
