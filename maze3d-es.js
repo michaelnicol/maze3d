@@ -1,4 +1,4 @@
-class Maze3D {
+export default class Maze3D {
     /**
       * @constructor
       * @param {Object} constriants - Contains the constructor data for the maze: barrierCharacter, spaceCharacter, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
@@ -385,4 +385,3 @@ class Maze3D {
       })
     }
   }
-export const Maze3D = Maze3D;
