@@ -12,7 +12,13 @@
     "type": "git",
     "url": "git+https://github.com/michaelnicol/maze3d.git"
   },
-  "keywords": ["matrix","maze","breadth","algorithm","3d"],
+  "keywords": [
+    "matrix",
+    "maze",
+    "breadth",
+    "algorithm",
+    "3d"
+  ],
   "author": "Michael Nicol",
   "license": "UNLICENSED",
   "bugs": {
