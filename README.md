@@ -14,12 +14,15 @@ Then import the common module in another JS file:
 
 ```
 const mazePackage = require("maze3d-common")
+const {Maze3D} = mazePackage
 ```
 
-maze3d also offers CDN support for client side:
+maze3d also offers CDN support for client side due to cross origin security policies. This works by accessing the Github file directly, and importing as ```content-type: application/javascript; charset=utf-8```:
 
 ```
-import Maze3D from "https://cdn.jsdelivr.net/gh/michaelnicol/maze3d/maze3d-es.js"
+<script type="module">
+  import Maze3D from "https://cdn.jsdelivr.net/gh/michaelnicol/maze3d/maze3d-es.js"
+</script>
 ```
 
 ![Thumbnail image of solved mave, with barriers removed so path can be scene](https://i.imgur.com/acM1uYM.png)
