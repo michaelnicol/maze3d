@@ -2,11 +2,29 @@
 
 A 3D Maze solving algorithem that implements breath-first search.
 
+## Installation
+
+To install using node.js for server side:
+
 ```
-npm install maze3d
+npm i maze3d
+```
+
+Then import the common module in another JS file:
+
+```
+const mazePackage = require("maze3d-common")
+```
+
+maze3d also offers CDN support for client side:
+
+```
+import Maze3D from "https://cdn.jsdelivr.net/gh/michaelnicol/maze3d/maze3d-es.js"
 ```
 
 ![Thumbnail image of solved mave, with barriers removed so path can be scene](https://i.imgur.com/acM1uYM.png)
+
+## Create Your First Maze
 
 The Maze3D class accepts a object for the maze constraints with the following properties:
 
@@ -29,7 +47,6 @@ constraints = {
 
 The constraints above are also the default constraints of the maze if no object is passed in or the object passed in does not contain all required properties. Read below to understand how each constraint affects the maze.
 
-## Create Your First Maze
 
 Create a new maze instance with the constraints listed above. This will not generate the maze itself, but only pass the constraints into the Maze3D object.
 
