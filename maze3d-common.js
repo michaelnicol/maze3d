@@ -1,5 +1,3 @@
-import * as three from "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
-
 class Maze3D {
   /**
     * @constructor
@@ -8,11 +6,11 @@ class Maze3D {
   constructor(constraints) {
     /**
      * @public {Object} contraints - Contains the Maze3D data for the maze: barrierCharacter, spaceCharacter, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidSpaceCharacter.
-     */
+     */ 
     // Below is the default constraints for the maze
     this.constraints = {
       barrierCharacter: "X",
-      spaceCharacter: " ",
+      spaceCharacter: " ", 
       pathCharacter: "O",
       width: 5,
       height: 5,
@@ -23,120 +21,6 @@ class Maze3D {
       diagChance: 2,
       voidSpace: [],
       voidSpaceCharacter: "#"
-    }
-    this._threeModelOptions = {
-      source: this.barrierMaze,
-      instance: true,
-      barrier: {
-        generate: true,
-        opacity: 1.0,
-        color: 0x00FF00
-      },
-      space: {
-        generate: true,
-        opacity: 0.0,
-        color: 0xFF0000
-      },
-      path: {
-        generate: true,
-        opacity: 1.0,
-        color: 0x0000FF
-      },
-      void: {
-        generate: false,
-        opacity: 0.0,
-        color: 0x634f4f
-      }
-    }
-    /* 
-  Barrier, void, space 
-  animationSlice:
-  depth-layer
-  heigh-layer
-  width-layer
-  Other:
-  map-distance // only for map
-  solve-path // only for path
-  animationVoxel:
-  fade-in
-  slide-in
-  */
-    this._threeModelAnimationOptions = {
-      animateAllAtOnce: false,
-      animateInOrder: true,
-      tickSpeed: 1,
-      order: ["void", "barrier", "space", "map", "path"],
-      maze: { // animateAllAtOnce
-        animationSlice: "depth-layer",
-        animationVoxel: "fade-in",
-        slideInOptions: {
-          distance: new three.Vector(5, 5, 5),
-          time: 1,
-        },
-        fadeInOptions: {
-          time: 1,
-        }
-      },
-      void: { // animateInOrder
-        animate: false,
-        animationSlice: "depth-layer",
-        animationVoxel: "fade-in",
-        slideInOptions: {
-          distance: new three.Vector(5, 5, 5),
-          time: 1,
-        },
-        fadeInOptions: {
-          time: 1,
-        }
-      },
-      barrier: { // animateInOrder
-        animate: true,
-        animationSlice: "depth-layer",
-        animationVoxel: "fade-in",
-        slideInOptions: {
-          distance: new three.Vector(5, 5, 5),
-          time: 1,
-        },
-        fadeInOptions: {
-          time: 1,
-        }
-      },
-      space: { // animateInOrder
-        animate: false,
-        animationSlice: "depth-layer",
-        animationVoxel: "fade-in",
-        slideInOptions: {
-          distance: new three.Vector(5, 5, 5),
-          time: 1,
-        },
-        fadeInOptions: {
-          time: 1,
-        }
-      },
-      map: { // animateInOrder
-        animate: true,
-        animationSlice: "map-distance",
-        animationVoxel: "fade-in",
-        slideInOptions: {
-          distance: new three.Vector(5, 5, 5),
-          time: 1,
-        },
-        fadeInOptions: {
-          time: 1,
-        }
-      },
-      path: { // animateInOrder
-        animate: true,
-        animationSlice: "solve-path",
-        animationVoxel: "fade-in",
-        slideInOptions: {
-          distance: new three.Vector(5, 5, 5),
-          time: 1,
-        },
-        fadeInOptions: {
-          time: 1,
-        }
-      }
     }
     if (typeof constraints === "object") {
       for (let key of Object.keys(constraints)) {
@@ -149,7 +33,7 @@ class Maze3D {
     for (let i = 0; i < Characters.length; i++) {
       for (let j = 0; j < Characters.length; j++) {
         if (Characters[i] === Characters[j] && i !== j) {
-          throw new TypeError("Error in Maze Constraints: " + Characters[i] + " maze Character is duplicated across multiple properties " + JSON.stringify(Characters) + ".")
+          throw new TypeError("Error in Maze Constraints: " + Characters[i] + " maze Character is duplicated across multiple properties " + JSON.stringify(Characters) +".")
         }
       }
     }
@@ -173,7 +57,6 @@ class Maze3D {
      * @public {Array} path - 2D Matrix containing the ZYX coordinates for the solved maze path
     */
     this.path = []
-    this._resetModel()
   }
   /** 
     * @private @function _findSurrondingValues - Internal Function: Used to find surronding values to a given cell
@@ -270,12 +153,6 @@ class Maze3D {
   _isCharBlockade(char) {
     return char === this.constraints.barrierCharacter || char === this.constraints.voidChacater
   }
-  _resetModel() {
-    this.threeModel = undefined
-    this.threeModelAnimationClip = undefined
-    this.threeModelAnimationMixer = undefined
-    this._mazeInstanceDetails = {}
-  }
   /** 
    * @public @function generateMazeTemplate - Generates a maze building template stored within a 3D matrix. Uses a barrer space barrier pattern in all 3 demensions. Fills specified void areas with void chacacters. Stores in this.mazeTemplate.
    * @returns void
@@ -286,8 +163,6 @@ class Maze3D {
     this.path = []
     this.tracedBarrierMaze = []
     this.mappedNumberMaze = []
-    this.threeModel;
-    this.threeModelAnimation;
     for (let d = 0; d < this.constraints.depth; d++) {
       let layer = []
       // Depth Layer with Barriers
@@ -509,171 +384,5 @@ class Maze3D {
       return cellValue
     })
   }
-  generateThreeModel(options) {
-    this._resetModel()
-    for (let iKey of Object.keys(options)) {
-      this._threeModelOptions[iKey] = options[iKey]
-    }
-    let instanceObj = {}
-    const geometry = new three.BoxGeometry(1, 1, 1);
-    let barrierMaterial;
-    let spaceMaterial;
-    let voidMaterial;
-    let pathMaterial;
-    if (options.instance) {
-      this._mazeInstanceDetails = {
-        pathCount: this.path.length,
-        pathDRC: [...this.path],
-        voidCount: this.voidSpace.length,
-        voidDRC: [...this.voidSpace],
-        spaceCount: 0,
-        spaceDRC: [],
-        barrierCount: 0,
-        barrierDRC: []
-      };
-      const { source } = options
-      for (let d = 0; d < source.length; d++) {
-        for (let r = 0; r < source[d].length; r++) {
-          for (let c = 0; c < source[d][r].length; c++) {
-            if (source[d][r][c] === this.barrierCharacter) {
-              this._mazeInstanceDetails.barrierCount += 1;
-              this._mazeInstanceDetails.barrierDRC.push([d, r, c]);
-              // If the space is not occupied by a path, then save it's location also
-            } else if (
-              source[d][r][c] === this.spaceCharacter &&
-              !this._arr2dContainsArr1d(this._mazeInstanceDetails.pathDRC, [
-                d,
-                r,
-                c
-              ])
-            ) {
-              this._mazeInstanceDetails.spaceCount += 1;
-              this._mazeInstanceDetails.spaceDRC.push([d, r, c]);
-            }
-          }
-        }
-      }
-      const mapPosition = (instance, DRC, name) => {
-        let calcObj = new three.Object3D()
-        instance.name = name
-        instance.customType = "MAZE_INSTANCE"
-        for (let i = 0; i < instance.count; i++) {
-          cubeObj.position.set(
-            DRC[i][2], DRC[i][1], DRC[i][0]
-          )
-          cubeObj.updateMatrix()
-          instance.setMatrixAt(i, calcObj.matrix)
-        }
-        instance.instanceColor.needsUpdate = true
-      }
-      if (options.barrier.generate) {
-        barrierMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.barrier.opacity,
-          color: new three.Color(options.barrier.color)
-        });
-        instanceObj.barrier = new three.InstancedMesh(
-          geometry,
-          barrierMaterial,
-          this._mazeInstanceDetails.barrierCount
-        );
-        mapPosition(instanceObj.barrier, this._mazeInstanceDetails.barrierDRC, "barrier")
-      }
-      if (options.path.generate) {
-        pathMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.path.opacity,
-          color: new three.Color(options.path.color)
-        });
-        instanceObj.path = new three.InstancedMesh(
-          geometry,
-          pathMaterial,
-          this._mazeInstanceDetails.pathCount
-        );
-        mapPosition(instanceObj.path, this._mazeInstanceDetails.barrierDRC, "path")
-      }
-      if (options.space.generate) {
-        spaceMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.space.opacity,
-          color: new three.Color(options.space.color)
-        });
-        instanceObj.path = new three.InstancedMesh(
-          geometry,
-          spaceMaterial,
-          this._mazeInstanceDetails.spaceCount
-        );
-        mapPosition(instanceObj.space, this._mazeInstanceDetails.barrierDRC, "space")
-      }
-      if (options.void.generate) {
-        voidMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.void.opacity,
-          color: new three.Color(options.void.color)
-        });
-        instanceObj.void = new three.InstancedMesh(
-          geometry,
-          voidMaterial,
-          this._mazeInstanceDetails.voidMaterial
-        );
-        mapPosition(instanceObj.void, this._mazeInstanceDetails.barrierDRC, "void")
-      }
-    } else {
-      if (options.barrier.generate) {
-        barrierMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.barrier.opacity,
-          color: new three.Color(options.barrier.color)
-        });
-        instanceObj.barrier = []
-      }
-      if (options.path.generate) {
-        pathMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.path.opacity,
-          color: new three.Color(options.barrier.color)
-        });
-        instanceObj.path = []
-      }
-      if (options.space.generate) {
-        spaceMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.space.opacity,
-          color: new three.Color(options.barrier.color)
-        });
-        instanceObj.space = []
-      }
-      if (options.void.generate) {
-        voidMaterial = new three.MeshStandardMaterial({
-          transparent: true,
-          opacity: options.void.opacity,
-          color: new three.Color(options.barrier.color)
-        });
-        instanceObj.void = []
-      }
-      const { source } = options
-      for (let d = 0; d < source.length; d++) {
-        for (let r = 0; r < source[d].length; r++) {
-          for (let c = 0; c < source[d][r].length; c++) {
-            let cell = source[d][r][c]
-            if (cell === this.constraints.barrierCharacter && options.barrier.generate) {
-              instanceObj.barrier.push(new three.Mesh(geometry, barrierMaterial))
-            } else if (cell == this.constraints.spaceCharacter && options.space.generate) {
-              instanceObj.space.push(new three.Mesh(geometry, spaceMaterial))
-            } else if (cell == this.constraints.voidSpaceCharacter && options.void.generate) {
-              instanceObj.void.push(new three.Mesh(geometry, voidMaterial))
-            } else if (cell == this.constraints.pathCharacter && options.path.generate) {
-              instanceObj.path.push(new three.Mesh(geometry, pathMaterial))
-            }
-          }
-        }
-      }
-    }
-    return instanceObj
-  }
-  generateThreeModelAnimation(options) {
-  }
 }
 module.exports.Maze3D = Maze3D
-// fix
-// voidSpace and void name conflicts
