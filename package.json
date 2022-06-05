@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/michaelnicol/maze3d/issues"
   },
-  "homepage": "https://github.com/michaelnicol/maze3d#readme"
+  "homepage": "https://github.com/michaelnicol/maze3d#readme",
+  "dependencies": {
+    "three": "^0.141.0"
+  }
 }
