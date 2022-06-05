@@ -1,3 +1,5 @@
+Warning: Github files are currently in experimtnal version 3.0.0. DOwnloading from npm will ensure they continue to work.
+
 # maze3d
 
 A 3D Maze solving algorithem that implements breath-first search.
