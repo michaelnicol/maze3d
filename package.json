@@ -1,8 +1,8 @@
 {
   "name": "maze3d",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "A 3D Matrix Maze Algorithm that uses breadth first search",
-  "main": "maze3d-common.js",
+  "main": "maze3d-es.js",
   "scripts": {
     "runCommon": "node maze3d-common.js",
     "runES": "node maze3d-es.js",
@@ -17,7 +17,8 @@
     "maze",
     "breadth",
     "algorithm",
-    "3d"
+    "3d",
+    "three"
   ],
   "author": "Michael Nicol",
   "license": "MIT",
