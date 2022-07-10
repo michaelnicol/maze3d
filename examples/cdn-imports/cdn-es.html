@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+ <script type="module">
+     import Maze3D from "https://cdn.jsdelivr.net/gh/michaelnicol/maze3d/maze3d-es.js"
+     let constraints = {
+        barrierCharacter: "X",
+        spaceCharacter: " ", 
+        pathCharacter: "O",
+        width: 10,
+        height: 10,
+        depth: 10,
+        xChance: 2,
+        yChance: 2,
+        zChance: 2,
+        diagChance: 2,
+        voidSpace: [],
+        voidSpaceCharacter: "#"
+      }
+     let clientMaze = new Maze3D(constraints)
+     console.log(clientMaze)
+ </script>
+</html>
