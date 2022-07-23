@@ -2,12 +2,15 @@
 
 The internet's most in-depth 3D Maze breath-first search algorithem.
 
-README.md for version ~3.0.0
+README.md for version 3.0.1
 
 - [maze3d](#maze3d)
+  - [Patch Notes](#patch-notes)
+  - [Youtube Tutorial](#youtube-tutorial)
   - [Installation](#installation)
     - [CommonJS Server Side Only](#commonjs-server-side-only)
-    - [ECMAScript Server Side to Client Side](#ecmascript-server-side-to-client-side)
+    - [ECMAScript Server Side to Client Side with CDN Dependency](#ecmascript-server-side-to-client-side-with-cdn-dependency)
+    - [ECMAScript Server Side to Client Side with Modules Dependency](#ecmascript-server-side-to-client-side-with-modules-dependency)
     - [CDN Client Side Only](#cdn-client-side-only)
     - [Legacy CDN Import](#legacy-cdn-import)
   - [Build Your Maze](#build-your-maze)
@@ -36,9 +39,23 @@ README.md for version ~3.0.0
     - [Other Animation API Actions](#other-animation-api-actions)
   - [Resources](#resources)
 
-Youtube Tutorial: \<coming soon\>
+## Patch Notes
+
+3.0.1 Patch notes for 3.0.0:
+
+* Fixed animationSlice coordinate sorting
+* Fixed timings: A groupItem must exit before next group can begin and exitDelay has been fixed.
+* Created Youtube Video
+* Changed file names: ```maze3d-es-cdn``` imports three from CDN and ```maze3d-es-node``` relies on a bundler for direct module import.
+* Fixed example project to use Vite as developer tool to avoid bad CDN imports.
+
+## Youtube Tutorial
+
+A Youtube Video was created in order to fully explain the package: [https://youtu.be/QtfAazQJgJI](https://youtu.be/QtfAazQJgJI)
+
 
 ## Installation
+
 
 There are mutiple different ways to install maze3d depending on the usage.
 
@@ -59,19 +76,36 @@ const {Maze3D} = mazePackage
 
 **Note**: The CommonJS file uses ```const three = require('three')``` in order to access the three.js library from the ```node_modules```
 
-### ECMAScript Server Side to Client Side
+### ECMAScript Server Side to Client Side with CDN Dependency
 
-If this static file will be served to a client, then the import path can not use the node.js modules directory unless that is also served (see ```npm i browersify```).
+If this static file will be served to a client and the developer is not using a build tool, then the import path can not use the node.js modules directory unless that is also served (see ```npm i browersify```).
+
 
 Import the common module in a JS file. The file path may change depending on project layout:
 
 ```
-import Maze3D from "./maze3d-es.js";
+import Maze3D from "maze3d/maze3d-es-cdn";
 ```
 
 **Note**: The ECMA file accesses three.js via CDN: 
 ```
 import * as three from "https://unpkg.com/three@0.141.0/build/three.module.js"; 
+``` 
+
+### ECMAScript Server Side to Client Side with Modules Dependency
+
+If this static file will be served to a client and the developer is using a build tool such as vite, three.js can be directly imported from the node_modules. Vite will automatically change the imports and exports in order to use absolute file paths directly managed via the built in server.
+
+
+Import the common module in a JS file. The file path may change depending on project layout:
+
+```
+import Maze3D from "maze3d/maze3d-es-node";
+```
+
+**Note**: The ECMA file accesses three.js via node_modules: 
+```
+import * as three from "three"; 
 ``` 
 
 ### CDN Client Side Only
@@ -80,7 +114,7 @@ maze3d also offers CDN support for client side due to cross origin security poli
 
 ```
 <script type="module">
-  import Maze3D from "https://cdn.jsdelivr.net/gh/michaelnicol/maze3d/maze3d-es.js"
+  import Maze3D from "https://cdn.jsdelivr.net/gh/michaelnicol/maze3d/maze3d-es-cdn.js"
 </script>
 ```
 
@@ -102,7 +136,7 @@ To help visulize this what is going on during this process, a live demo has been
 - You can download this demo: https://github.com/michaelnicol/maze3d-world
 - Live web link: https://5e9mti.csb.app/
 - Live web link code: https://codesandbox.io/s/interactive-maze3d-3-0-0-5e9mti?file=/src/World.js
-- Basic project for 3D modeling sections: https://github.com/michaelnicol/maze3d-tutorial
+- Basic project for 3D modeling sections: https://github.com/michaelnicol/mazd3d-example
 
 ### Basic Setup
 
@@ -403,43 +437,44 @@ This function deep copies (no mutation) ```clientMaze.barrierMaze``` and uses a 
 
 ### Setup
 
-Any client side project using maze3d must originate from a live web server or a online IDE such as [codesandbox](https://codesandbox.io/u/michaelnicol). This is due to CORS stemming from the import statements within the maze3d source code. The code is from the ```maze3d-tutoiral``` project found on [github (link)](https://github.com/michaelnicol/maze3d-tutorial). The upcoming Youtube Tutorial (3.0.1) will have a more in-depth explaination on this process.
+Any client side project using maze3d must originate from a live web server or a online IDE such as [codesandbox](https://codesandbox.io/u/michaelnicol). This is due to CORS stemming from the import statements within the maze3d source code. The code is from the ```maze3d-example``` project found on [github (link)](https://github.com/michaelnicol/maze3d-example). Please watch the Youtube Video to fully understand this project.
 
 The boilerplate code for setting up a very basic three.js scene is below. Please read [https://discoverthreejs.com/](https://discoverthreejs.com/) for more information.
 
-three.js uses a import map in order to provide resoultion and control over which parts of the library are imported. In this case, three.js is not a ```node_module``` but is getting imported via CDN.
+three.js is installed as a dependency and vite can automatically resolve the relative imports into absolute imports done via the dev server.
+
+index.html:
 
 ```
 <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>Parcel Sandbox</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./styles.css">
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.skypack.dev/three@0.142.0/build/three.module",
-          "three/": "https://cdn.skypack.dev/three@0.142.0/"
-        }
-      }
-    </script>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maze3D Example</title>
   </head>
   <body>
     <div id="app"></div>
+    <script type="module" src="/main.js"></script>
   </body>
-  <script type="module">
-    import * as three from "three"
-    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-    import Maze3D from "maze3d-es.js"
-    // Code for below all goes in here
-    </script>
 </html>
+```
+
+main.js:
+
+```
+import * as three from "three"
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import Maze3D from "./maze3d-es-node"
 ```
 
 ### Boilerplate
 
 The code required to get three.js running with a basic scene is the following:
+
+main.js:
 
 ```
     const container = document.getElementById("app")
@@ -773,7 +808,7 @@ An animation space slice sliding in:
 
 ### Playing the Animation
 
-The ```generateAnimation``` function produces:
+The ```generateAnimation``` function produces
 
  - ```clientMaze._animationSliceMixers``` - Holds all of the ```AnimationMixer``` objects that hold animation controls for each slice.
  - ```clientMaze._animationInstances``` - Holds all of the ```three.InstanceMesh``` slices, where the property name of each slice corresponds to a mixer.

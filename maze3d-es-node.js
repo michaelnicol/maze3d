@@ -1,5 +1,5 @@
-const three = require("three")
-class Maze3D {
+import * as three from "three";
+export default class Maze3D {
   /**
    * @constructor
    * @param {Object} constriants - Contains the constructor data for the maze: barrierChar, spaceChar, depth, height, width, xChance, yChance, zChance, diagChance, voidSpace, voidChar, sliceOffVoid
@@ -1053,7 +1053,6 @@ class Maze3D {
           }
         }
       }
-      console.log(this._animationSortedInstanceCoords)
       // Generate a new instance for each bank, mapping the coordinates of each bank to the instance.
       for (let i = 0; i < this._animationSortedInstanceCoords[targetDRC].length; i++) {
         this._animationMaterials[groupItem][i] = new three.MeshPhongMaterial({
@@ -1700,4 +1699,3 @@ class Maze3D {
     return exitLoad;
   }
 }
-module.exports.Maze3D = Maze3D
