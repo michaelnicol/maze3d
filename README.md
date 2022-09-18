@@ -1,6 +1,6 @@
 # maze3d
 
-The internet's most in-depth 3D Maze breath-first search algorithem.
+The internet's most in-depth 3D Maze breadth-first search algorithm.
 
 README.md for version 3.0.1
 
@@ -41,13 +41,18 @@ README.md for version 3.0.1
 
 ## Patch Notes
 
+3.0.1 Patch notes for 3.0.1:
+
+* Fixed the animations loading inverted due to a flipped comparison operator within the internal _sliceMaze function.
+* Changed "entrence" misspelling to "entrance."
+
 3.0.1 Patch notes for 3.0.0:
 
 * Fixed animationSlice coordinate sorting
-* Fixed timings: A groupItem must exit before next group can begin and exitDelay has been fixed.
+* Fixed timings: A groupItem must exit before the next group can begin, and exitDelay was implemented.
 * Created Youtube Video
-* Changed file names: ```maze3d-es-cdn``` imports three from CDN and ```maze3d-es-node``` relies on a bundler for direct module import.
-* Fixed example project to use Vite as developer tool to avoid bad CDN imports.
+* Changed file names: ```maze3d-es-cdn``` imports three from CDN, and ```maze3d-es-node``` relies on a bundler for direct module import.
+* Fixed example project to use Vite as a developer tool to avoid lousy CDN imports.
 
 ## Youtube Tutorial
 
@@ -57,7 +62,7 @@ A Youtube Video was created in order to fully explain the package: [https://yout
 ## Installation
 
 
-There are mutiple different ways to install maze3d depending on the usage.
+There are multiple different ways to install maze3d depending on the usage.
 
 ```
 npm i maze3d
@@ -65,7 +70,7 @@ npm i maze3d
 
 ### CommonJS Server Side Only
 
-If this file will not be served to a client but only run on a server.
+If this file is not served to a client but only runs on a server for server-side calculations.
 
 Import the common module in a JS file:
 
@@ -78,26 +83,26 @@ const {Maze3D} = mazePackage
 
 ### ECMAScript Server Side to Client Side with CDN Dependency
 
-If this static file will be served to a client and the developer is not using a build tool, then the import path can not use the node.js modules directory unless that is also served (see ```npm i browersify```).
+If this static file is served to a client and the developer is not using a build tool, then the import path can not use the node.js modules directory unless that is also served (see ```npm i browersify```).
 
 
-Import the common module in a JS file. The file path may change depending on project layout:
+Import the common module in a JS file. The file path may change depending on the project layout:
 
 ```
 import Maze3D from "maze3d/maze3d-es-cdn";
 ```
 
-**Note**: The ECMA file accesses three.js via CDN: 
+**Note**: The maze3d-es-cdn file accesses three.js via CDN: 
 ```
 import * as three from "https://unpkg.com/three@0.141.0/build/three.module.js"; 
 ``` 
 
 ### ECMAScript Server Side to Client Side with Modules Dependency
 
-If this static file will be served to a client and the developer is using a build tool such as vite, three.js can be directly imported from the node_modules. Vite will automatically change the imports and exports in order to use absolute file paths directly managed via the built in server.
+If this static file is served to a client and the developer uses a build tool such as vite, three.js can be directly imported from the node_modules. Vite will automatically change the imports and exports to use absolute file paths directly managed via the built-in server.
 
 
-Import the common module in a JS file. The file path may change depending on project layout:
+Import the common module in a JS file. The file path may change depending on the project layout:
 
 ```
 import Maze3D from "maze3d/maze3d-es-node";
@@ -110,7 +115,7 @@ import * as three from "three";
 
 ### CDN Client Side Only
 
-maze3d also offers CDN support for client side due to cross origin security policies. This works by accessing the Github file directly, and importing as ```content-type: application/javascript; charset=utf-8```:
+maze3d also offers CDN support for the client side due to cross-origin security policies. This works by accessing the Github file directly and importing it as ```content-type: application/javascript; charset=utf-8```:
 
 ```
 <script type="module">
@@ -120,7 +125,7 @@ maze3d also offers CDN support for client side due to cross origin security poli
 
 ### Legacy CDN Import
 
-Within the ```legacy-versions``` directory, versions 2.0.2 for with ECMA and Common imports can be found. They can also be imported using a CDN.
+Within the ```legacy-versions``` directory, versions 2.0.2 for ECMA and Common imports can be found. They can also be imported using a CDN.
 ```
 <script type="module">
   import Maze3D from "https://cdn.jsdelivr.net/gh/michaelnicol/maze3d/legacy-versions/maze3d-es.js"
@@ -131,16 +136,16 @@ Within the ```legacy-versions``` directory, versions 2.0.2 for with ECMA and Com
 
 ### Live Demo
 
-To help visulize this what is going on during this process, a live demo has been created
+A live demo visualizes what is going on during this process.
 
-- You can download this demo: https://github.com/michaelnicol/maze3d-world
+- Download this demo: https://github.com/michaelnicol/maze3d-world
 - Live web link: https://5e9mti.csb.app/
 - Live web link code: https://codesandbox.io/s/interactive-maze3d-3-0-0-5e9mti?file=/src/World.js
 - Basic project for 3D modeling sections: https://github.com/michaelnicol/mazd3d-example
 
 ### Basic Setup
 
-The ```Maze3D``` class accepts a constraints object. The constraints below are also the default constraints if no object is passed in or a property is missing from the passed constraint object.
+The ```Maze3D``` class accepts a constraints object. The constraints below are also the default constraints if no object is passed in or the property is missing from the passed constraint object.
 
 ```
 const constraints = {
@@ -163,13 +168,13 @@ const clientMaze = new Maze3D(constraints)
 
 ### Template
 
-In order to generate the maze, a template must be created for the maze to sit upon.
+In order to generate the maze, a template must be created for the maze to sit.
 
 ```
 clientMaze.generateMazeTemplate()
 ```
 
-This creates a 3D matrix with a barrier space barrier pattern in all three dimensions based on the given height, depth and width. 
+This creates a 3D matrix with a barrier space barrier pattern in all three dimensions based on height, depth, and width. 
 
 This creates a template stored in ```clientMaze.barrierMaze``` and ```clientMaze.mazeTemplate```
 
@@ -201,25 +206,25 @@ This creates a template stored in ```clientMaze.barrierMaze``` and ```clientMaze
         [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
         [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
     ]
-    // ... continuted on for 9 more layers
+    // ... continued on for nine more layers
 ]
 ```
 
 - Barriers are represented with the string only ```barrierChar```
 - Spaces are represented with string only ```spaceChar```
 
-As later shown in the tutoiral under the **Three Modeling** section, this will produce the following pattern when ploted in 3D space:
+As later shown in the tutorial under the **Three Modeling** section, this will produce the following pattern when plotted in 3D space:
 
 ![Maze Template Image at https://i.imgur.com/hzN2nJl.png](https://i.imgur.com/hzN2nJl.png)
 
 ## Void Space
 
-Void Space is empty space that acts like a barrier, while being a seperate character from the barriers. This allows the programmer to set it so plotted void spaces are invisible, while barriers are, allowing for a dynamic changing for the maze template shape. The maze algorithm cannot path find through void space.
+Void Space is a space that acts like a barrier while being a separate character from the barriers. This allows the programmer to set it so plotted void spaces are invisible while barriers are, allowing for a dynamic change for the maze template shape. The maze algorithm cannot path find through void space.
 
-The ```constraints``` object has three options
+The ```constraints``` object has three options.
 
-- ```voidSpace``` - An array of coordinates for each void space location. Each coordinate must be in a ZYX order, since this is the order at which a 3D matrix is accessed.
-- ```sliceOffVoid``` - Default value of false. If any of the coordinates for the void space are outside of the maze template bounds, it will error. If this value is set to true, it will simply ignore out of bounds void space.
+- ```voidSpace``` - An array of coordinates for each void space location. Each coordinate must be in a ZYX order since this is the order in which a 3D matrix is accessed.
+- ```sliceOffVoid``` - Default value of false. If any of the coordinates for the void space are outside of the maze template bounds, it will error. If this value is true, it will simply ignore out-of-bounds void space.
 - ```voidChar``` - Representation
 
 ### Void Space Example
@@ -255,17 +260,17 @@ const constraints  = {
   [8,5,0],[8,5,1],[8,5,2],[8,5,3],[8,5,4],[8,5,5],[8,5,6],[8,5,7]]
 }
 ```
-When the 3D model is generated, this create a large gap within the maze that the path cannot travel through:
+When the 3D model is generated, this creates a significant gap within the maze that the path cannot travel through:
 
 ![Gap in maze template https://i.imgur.com/ZRy2dHz.png](https://i.imgur.com/ZRy2dHz.png)
 
-When the 3D model is generated and the void is set to visible but the barriers are hidden, the volume of the void is visulized.
+When the 3D model is generated, and the void is set to visible, but the barriers are hidden, the volume of the void is visualized.
 
 ![Visuilzed void https://i.imgur.com/nxeY9pa.png](https://i.imgur.com/nxeY9pa.png)
 
 ## Generating Random Barriers
 
-Randomizing the barriers within the maze template is done by calling ```generateMazeBarriers()```. This stores the 3D matrix in ```clientMaze.barrierMaze```. Note that the previous ```generateMazeTemplate()``` stores the template in both ```clientMaze.mazeTemplate``` and ```clientMaze.barrierMaze```.
+Randomize the barriers within the maze template by calling ```generateMazeBarriers()```. This stores the 3D matrix in ```clientMaze.barrierMaze```. Note that the previous ```generateMazeTemplate()``` stores the template in both ```clientMaze.mazeTemplate``` and ```clientMaze.barrierMaze```.
 
 ```
 clientMaze.generateMazeBarriers()
@@ -301,7 +306,7 @@ This produces a 3D matrix with the following pattern:
         [" ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
         [" ", " ", " ", " ", " ", "X", " ", " ", " ", " ", "X"]
     ],
-    // ... continuted on for 9 more layers
+    // ... continued for nine more layers
 ]
 ```
 When this is 3D modeled, it produces the following object (minus red and green boxes):
@@ -312,19 +317,19 @@ When this is 3D modeled, it produces the following object (minus red and green b
 
 In the photo below are examples of the chance locations. The red box is the ```xChance```, green is the ```yChance```, orange is the ```zChance```, and purple is the ```diagChance```.
 
-When the maze is generating barriers, it will use the number associated with these property values for the chance that a barrier will spawn. A chance of int 1 is a 50% chance, a int 0 is a 100% chance. Any template barriers that are not touching a generated random barrier are removed, creating the random maze pattern.
+When the maze generates barriers, it will use the number associated with these property values for the chance that a barrier will spawn. A chance of int 1 is a 50% chance, and an int 0 is a 100% chance. Any template barriers not touching a generated random barrier are removed, creating the random maze pattern.
 
 ![chance maze https://i.imgur.com/6LG0FI2.png](https://i.imgur.com/6LG0FI2.png)
 
 ## Solve Maze
 
-A solved maze can be generated using the start and end coordinates in ZYX order. Since they are indices in a matrix, they must be one less at maximum then the constraints dimensions.
+A solved maze can be generated using the start and end coordinates in ZYX order. Since they are indices in a matrix, they must be one less at maximum than the constraints dimensions.
 
 ```
 clientMaze.solveMaze([0,0,0],[10,10,10])
 ```
 
-This functions produces a list of ZYX matrix coordinates that represent the solve path stored in a 2D matrix ```clientMaze.path```.
+This function produces a list of ZYX matrix coordinates representing the solve path stored in a 2D matrix ```clientMaze.path```.
 
 ```
 [
@@ -334,7 +339,7 @@ This functions produces a list of ZYX matrix coordinates that represent the solv
 ]
 ```
 
-This function also produced a 3D matrix artifact of the breadth-first search algorithm stored in ```clientMaze.mappedNumberMaze```. The algorithm works by starting at the start coordinates, setting that as distance zero, and then spreading out in all three dimensions. It maps all space cells touching start cell as distance 1, and then sets all space cells touching a distance 1 cells as distance 2. This continues on until it a distance cell is also the end path cell. From here, it works backwards by traversing through all mapped cells by distance value back to the start.
+This function also produced a 3D matrix artifact of the breadth-first search algorithm stored in ```clientMaze.mappedNumberMaze```. The algorithm works by starting at the start coordinates, setting that as distance zero, and spreading out in all three dimensions. It maps all space cells touching the start cell as distance one and then sets all space cells touching distance one cells as distance 2. This continues until it a distance cell is also the end path cell. From here, it works backward by traversing through all mapped cells by distance value back to the start.
 ```
 [
     [
@@ -371,7 +376,7 @@ If these path coordinates are 3D modeled and imposed over the ```barrierMaze``` 
 
 ![path model https://i.imgur.com/2qwiBRE.png](https://i.imgur.com/2qwiBRE.png)
 
-[A common paradigm](https://github.com/michaelnicol/maze3d-tutorial) for solving the maze is of the following:
+[A standard paradigm](https://github.com/michaelnicol/maze3d-tutorial) for solving the maze is the following:
 
 ```
 const clientMaze = new Maze3D(constraints)
@@ -393,13 +398,13 @@ while (clientMaze.path.length === 0){
 
 ## Trace Maze
 
-Running this function is not nesscary as the 3D modeling functions in version ~3.0.0 uses ```clientMaze.path``` to compile the coordinates. This function is legacy to version ~2.0.0.
+Running this function is unnecessary as the 3D modeling functions in version ~3.0.0 use ```clientMaze.path``` to compile the coordinates. This function is legacy to version ~2.0.0.
 
 ```
 clientMaze.traceMazeWithPath()
 ```
 
-This function deep copies (no mutation) ```clientMaze.barrierMaze``` and uses a ```path``` coordinates overlay to visualize the solve. This data is stored in ```clientMaze.tracedBarrierMaze``` with each index is represented by the ```pathChar```. ```tracedBarrierMaze``` is not used in any future calculations for 3D modeling.
+This function deep copies (no mutation) ```clientMaze.barrierMaze``` and uses a ```path```coordinate overlay to visualize the solution. This data is stored in ```clientMaze.tracedBarrierMaze``` with each index represented by the ```pathChar```. ```tracedBarrierMaze``` is not used in any future calculations for 3D modeling.
 
 ```
 [
@@ -437,11 +442,11 @@ This function deep copies (no mutation) ```clientMaze.barrierMaze``` and uses a 
 
 ### Setup
 
-Any client side project using maze3d must originate from a live web server or a online IDE such as [codesandbox](https://codesandbox.io/u/michaelnicol). This is due to CORS stemming from the import statements within the maze3d source code. The code is from the ```maze3d-example``` project found on [github (link)](https://github.com/michaelnicol/maze3d-example). Please watch the Youtube Video to fully understand this project.
+Any client-side project using maze3d must originate from a live web server or an online IDE such as [codesandbox](https://codesandbox.io/u/michaelnicol). This is due to CORS stemming from the import statements within the maze3d source code. The code is from the ```maze3d-example``` project found on [github (link)](https://github.com/michaelnicol/maze3d-example). Please watch the Youtube Video understand this project fully.
 
-The boilerplate code for setting up a very basic three.js scene is below. Please read [https://discoverthreejs.com/](https://discoverthreejs.com/) for more information.
+The boilerplate code for setting up a basic three.js scene is below. Please read [https://discoverthreejs.com/](https://discoverthreejs.com/) for more information.
 
-three.js is installed as a dependency and vite can automatically resolve the relative imports into absolute imports done via the dev server.
+three.js is installed as a dependency, and vite can automatically resolve the relative imports into absolute imports done via the dev server.
 
 index.html:
 
@@ -472,7 +477,7 @@ import Maze3D from "./maze3d-es-node"
 
 ### Boilerplate
 
-The code required to get three.js running with a basic scene is the following:
+The code required to get three.js running with an introductory scene is the following:
 
 main.js:
 
@@ -491,7 +496,7 @@ main.js:
       renderer.render(scene, camera)
     })
 ```
-```OrbitControls``` is being used, which adds click and drag event listeners to the container. As a result, the project is being added to a seperate ```div``` instead of the body. This allows the rest of the webpage to be unaffected. The code above also references the window object, so this code will not work to run node server side. For this, research more information into node.js server side DOM.
+```OrbitControls``` is being used, which adds click and drag event listeners to the container. As a result, the project is being added to a separate ```div``` instead of the body. This allows the rest of the webpage to be unaffected. The code above also references the window object, so this code will not work to run Node server side. For this, research more information into node.js server-side DOM.
 
 The boilerplate code for maze3d.js:
 
@@ -504,7 +509,7 @@ clientMaze.generateMazeBarriers()
 
 ### Generate Model
 
-```generateModel``` is used to generate the three.js model for the maze with a options object. The results are stored in ```clientMaze.threeModel```.
+```generateModel``` is used to generate the three.js model for the maze with an options object. The results are stored in ```clientMaze.threeModel```.
 
 ```
  const modelOptions = {
@@ -549,23 +554,23 @@ clientMaze.setDefaultModelOptions()
 clientMaze.generateModel(modelOptions)
 ```
 
-The modeling code works by looping through the 3D matrix, and using the reversed index as the coordinates for a cube. A barrier at ```clientMaze.barrierMaze[1][2][3]``` is now a cube at XYZ ```(3,2,1)```.
+The modeling code works by looping through the 3D matrix and using the reversed index as the coordinates for a cube. A barrier at ```clientMaze.barrierMaze[1][2][3]``` is now a cube at XYZ ```(3,2,1)```.
 
 The ```instance``` property has two options:
-- When set to ```true```, it will ```three.InstanceMesh``` each component of the maze for maximum preformance but has a higher complexity to work with later on.
-- When set to ```false```, it wil create a ```three.Group``` with each ```clientMaze.barrierMaze``` being its own ```clientMaze._modelOptions.geometry```. This gives poor preformance, but is easier to work with.
+- When set to ```true```, it will ```three.InstanceMesh``` each component of the maze for maximum performance but has a higher complexity to work with later on.
+- When set to ```false```, it will create a ```three.Group``` with each ```clientMaze.barrierMaze``` being its own ```clientMaze._modelOptions.geometry```. This gives poor performance but is easier to manipulate later on.
 
-Setting the ```generate``` item to false under a component will cause no model to be generated for that component. This is useful because if a item's opacity is zero and the run time has no intention of ever displaying it visibly, then it can be set to not generate at all. The ```map``` component will generate a model part to display the ```clientMaze.mappedNumberMaze```. Each cell that contains a distance number will have a box.
+Setting the ```generate``` item to false under a component will cause no model to be generated for that component. This is useful because if an item's opacity is zero and the run time has no intention of ever displaying it visibly, then it can be set not to generate at all. The ```map``` component will generate a model part to display the ```clientMaze.mappedNumberMaze```. Each cell that contains a distance number will have a box.
 
 ### threeModel modelAPI options
 
-In order to add the model to the screen, a API is provided that accepts a action and payload. Note that the object will not be visible due to lack of lights.
+In order to add the model to the screen, an API is provided that accepts an action and payload. Note that the object will not be visible due to a lack of lights.
 
 ```
 clientMaze.modelAPI("addModel", scene)
 ```
 
-modelAPI provides other options for the ```threeModel``` via a action payload paradigm:
+modelAPI provides other options for the ```threeModel``` via an action payload paradigm:
 
 - ```("removeModel", scene)``` - Removes the model from the screen and disposes of related instance models.
 - ```("getUUID")``` - Returns the UUID of each ```Group``` or ```InstanceMesh``` in an 1D array.
@@ -596,7 +601,7 @@ const lightOptions = {
 Object.assign(lightOptions, clientMaze.getCornerSpotLightData()); // See the Light Data section for more detail
 clientMaze.generateSpotLights(renderer, lightOptions)
 ```
-The options above are also the default options for ```clientMaze._lightOptions``` when using the ```setDefaultSpotLightOptions()```. Generated SpotLights are stored in ```clientMaze._sceneLights```. Shadows can be enabled for each light, with the near and far requiring adjusting based on maze size. 
+The options above are also the default options for ```clientMaze._lightOptions``` when using the ```setDefaultSpotLightOptions()```. Generated SpotLights are stored in ```clientMaze._sceneLights```. Shadows can be enabled for each light, with the near and far required adjusting based on maze size. 
 
 ```
 clientMaze.setDefaultSpotLightOptions()
@@ -605,16 +610,16 @@ clientMaze.generateSpotLights(renderer, lightOptions)
 
 ### Spot Light API & Helpers
 
-The ```modelAPI``` has a varity of light actions available.
+The ```modelAPI``` has a variety of light actions available.
 
 - ```("addLights", scene)```
 - ```("removeLights", scene)```
-- ```("getLightsUUID")``` - Returns a 2D array. Index zero is the light UUID list, Index one is the target UUID list.
+- ```("getLightsUUID")``` - Returns a 2D array. Index zero is the light UUID list, and index one is the target UUID list.
 - ```("updateLightIntensity")```
 - ```("updateLightPos")``` - Recalculates the lights position based on the data stored in ```clientMaze._sceneLights```
 - ```('toggleShadow", <Boolean>)``` - Toggles ```castShadow``` on each light to the payload boolean. Renderer must have shadow maps enabled.
 
-The ```generateSpotLights``` and ```modelAPI``` methods creates shadow and light helpers that can be added to the screen.
+The ```generateSpotLights``` and ```modelAPI``` methods create shadow and light helpers that can be added to the screen.
 
 **Note**: If Shadow or Light helpers are generated, their update actions must be added to the animation frame loop.
 
@@ -635,8 +640,8 @@ In order to position the lights and control where they are pointing, the ```clie
 
 - ```lightXYZ``` - a 2D array of the XYZ coordinates of each light.
 - ```lightNormalXYZ``` - a 2D array of the normal vector for each light to define where it is pointing.
-- ```distanceMultXYZ``` - Scales how far each light is away from the ```lightXYZ``` coordinate. This is a array in XYZ order.
-- Optional: ```showTargetObj``` - When set to ```true```, shows the physical box where each SpotLight targets the maze.
+- ```distanceMultXYZ``` - Scales how far each light is away from the ```lightXYZ``` coordinate. This is an array in XYZ order.
+- Optional: ```showTargetObj``` - When set to ```true```, it shows the physical box where each SpotLight targets the maze.
 
 This is the data provided by ```getCornerSpotLightData```. These calculations position lights pointing at the corner of the maze.
 
@@ -656,7 +661,7 @@ lightNormalXYZ: [[0, -1, 0],[1, 0, 0],[-1, 0, 0],[0, 0, -1],[0, 0, 1],[0, 1, 0]]
 }
 ```
 
-```generateSpotLights``` works by creating a target object (```clientMaze._sceneLights.targetObj```) at each of the ```lightXYZ``` coordinates. Then, it creates a spotlight (```clientMaze._sceneLights.lights```) and sets its the position with the following formula:
+```generateSpotLights``` works by creating a target object (```clientMaze._sceneLights.targetObj```) at each of the ```lightXYZ``` coordinates. Then, it creates a spotlight (```clientMaze._sceneLights.lights```) and sets its position with the following formula:
 
 ```
 SpotLight<x,y,z> = lightXYZ<x,y,z> + (lightNormalXYZ<x,y,z> * distanceMultXYZ<x,y,z>)
@@ -690,7 +695,7 @@ animationOptions = {
         animationSlice: "height-layer",
         animationSliceOffset: 0, 
         animationSliceDuration: 0.5,
-        entrence: {
+        entrance: {
           type: "visible",
           distance: new three.Vector3(0, 100, 0)
         },
@@ -705,7 +710,7 @@ animationOptions = {
         animationSlice: "height-layer", 
         animationSliceOffset: 0, 
         animationSliceDuration: 0.5,
-        entrence: {
+        entrance: {
           type: "visible", 
           distance: new three.Vector3(0, 100, 0)
         },
@@ -720,7 +725,7 @@ animationOptions = {
         animationSlice: "height-layer", 
         animationSliceOffset: 0, 
         animationSliceDuration: 0.5, 
-        entrence: {
+        entrance: {
           type: "visible", 
           distance: new three.Vector3(0, 100, 0)
         },
@@ -735,7 +740,7 @@ animationOptions = {
         animationSlice: "map-distance", 
         animationSliceOffset: 0,
         animationSliceDuration: 0.5, 
-        entrence: {
+        entrance: {
           type: "visible",
           distance: new three.Vector3(0, 100, 0)
         },
@@ -750,7 +755,7 @@ animationOptions = {
         animationSlice: "solve-path",
         animationSliceOffset: 0,
         animationSliceDuration: 0.1, 
-        entrence: {
+        entrance: {
           type: "visible", 
           distance: new three.Vector3(0, 100, 0)
         },
@@ -767,13 +772,13 @@ clientMaze.generateAnimation(animationOptions)
 
 ### animationMesh
 
-When ```animationMesh.useCustom``` is set to ```True```, it will use the ```animationMesh.custom``` as the directory for how to make each component of the animation. If this is set to false, it will pull from the ```clientMaze.threeOptions``` for color, opacity and geometry data. 
+When ```animationMesh.useCustom``` is set to ```True```, it will use the ```animationMesh.custom``` as the directory for how to make each component of the animation. If this is false, it will pull from the ```clientMaze.threeOptions``` for color, opacity, and geometry data. 
 
 ### groupOrder & groupDelay
 
-The ```groupOrder``` is a 2D array defining the order at which components will execute the animations. Components in the same index (group) will execute their animations at the same time, which components in seperate indices will go one after another. The time between each group is defined in ```groupDelay``` in seconds. All animations in the same group must finish before the next group can start.
+The ```groupOrder``` is a 2D array defining the order in which components will execute the animations. Components in the same index (group) will execute their animations simultaneously, and components in separate indices will go one after another. The time between each group is defined in ```groupDelay``` in seconds. All animations in the same group must finish before the next group can start.
 
-In the following ```groupOrder```, the barrier, space and void will execute at the same time. This is followed by the map (```clientMaze.mappedNumberMaze```) and the path.
+In the following ```groupOrder```, the barrier, space, and void will execute simultaneously. This is followed by the map (```clientMaze.mappedNumberMaze```) and the path.
 
 ```
 [["barrier", "space", "void"], ["map"], ["path"]]
@@ -786,21 +791,21 @@ In the following ```groupOrder```, the barrier, space and void will execute at t
  - Path Only: solve-path
  - Map Only: map-distance
 - ```animationSliceOffset```: Time in seconds between each slice animating. It will use this offset for entering and exiting.
-- ```animationSliceDuration```: Time in seconds to animate each slice. It wil take this time to enter, then this time to exit.
-- ```entrence.type```: Controls how the slices will enter the animation.
+- ```animationSliceDuration```: Time in seconds to animate each slice. It will take this time to enter, then this time to exit.
+- ```entrance.type```: Controls how the slices will enter the animation.
   - All Components: slide, visible
-- ```entrence.distance```: If type is set to slide, a ```three.Vector3``` will define how far away that slice will start when animating to the final position.
+- ``` entrance.distance```: If the type is set to slide, a ```three.Vector3``` will define how far away that slice will start when animating to the final position.
 - ```exit.type```: Controls how the slices will exit the animation (all components).
   - invisible: The slice will disappear after the group is done animating
-  - visible: The slice will stay on screen after the group is done animating. Will disappear after the last group is done animating.
-  - slide: The slice will slide to ```exit.distance``` vector when group is done animating.
-- ```exit.order```: Controls the order at which slices will exit the animation (all components).
+  - visible: The slice will stay on screen after the group is done animating. It will disappear after the last group is done animating.
+  - slide: The slice will slide to ```exit.distance``` vector when the group is done animating.
+- ```exit.order```: Controls the order in which slices will exit the animation (all components).
   - normal: Exit the way slices entered (FIFO order)
   - reverse: Exit reverse the way slices entered (FILO order)
-  - instant: All slices exit instantly with no exit animation (technically the animation happens, but in zero seconds).
-- ```exit.exitDelay```: Time in seconds before exiting once group is done entering.
+  - instant: All slices exit instantly with no exit animation (technically, the animation happens in zero seconds).
+- ```exit.exitDelay```: Time in seconds before exiting once a group is done entering.
 
-Distance only needs to be specified if that component will be sliding in for that animation phase (enter or exit).
+Distance only needs to be specified if that component will slide in for that animation phase (enter or exit).
 
 An animation space slice sliding in:
 
@@ -812,21 +817,21 @@ The ```generateAnimation``` function produces
 
  - ```clientMaze._animationSliceMixers``` - Holds all of the ```AnimationMixer``` objects that hold animation controls for each slice.
  - ```clientMaze._animationInstances``` - Holds all of the ```three.InstanceMesh``` slices, where the property name of each slice corresponds to a mixer.
- - ```clientMaze._animationMaterials``` - Holds all of the materials for each slice. Each slice must have a seperate material to be controlled indepentally.
+ - ```clientMaze._animationMaterials``` - Holds the materials for each slice. Each slice must have a different material to be controlled independently.
 
-The ```animationMixersAPI``` allows all of the ```AnimationMixer``` objects to be managed under simple commands. Before animating the maze, make sure to remove the ```clientMaze.threeModel```.
+The ```animationMixersAPI``` allows all of the ```AnimationMixer``` objects to be managed under simple commands. Before animating the maze, remove the ```clientMaze.threeModel```.
 
 First, add the ```_animationInstances``` to the screen.
 
 ```
 clientMaze.animationMixersAPI("addModel", scene)
 ```
-Then, tell the ```AnimationMixer``` to activiate the ```AnimationAction``` that holds the ```AnimationClip``` array composed of various ```KeyframeTrack``` objects.
+Then, tell the ```AnimationMixer``` to activate the ```AnimationAction``` that holds the ```AnimationClip``` array composed of various ```KeyframeTrack``` objects.
 
 ```
 clientMaze.animationMixersAPI("play")
 ```
-Then, update the animation progress using a time data by adding it within the animation loop. 
+Then, update the animation progress using time data by adding it within the animation loop. 
 
 ```
 const clock = new three.Clock()
@@ -836,22 +841,22 @@ renderer.setAnimationLoop(() => {
     renderer.render(scene, camera)
 })
 ```
-Example of animation instances added to screen before hitting play. Yellow boxes are space cells that were mapped.
+Example of animation instances added to screen before hitting play. Yellow boxes are space cells that are mapped.
 
 ![Animation Mixers Instances https://i.imgur.com/OMw2Enx.png](https://i.imgur.com/OMw2Enx.png)
 
 ### Other Animation API Actions
 
 - ```("removeModel", scene)``` - Removes the ```_animationInstances``` from the scene.
-- ```("getRoot")``` - Returns an array of all of the uuid's of each ```_animationMixer``` for every slice.
+- ```("getRoot")``` - Returns an array of all of the UUIDs of each ```_animationMixer``` for every slice.
 - ```("stopAllAction")``` - Stops all of the ```AnimationAction``` objects, returning the animation to the ```addModel``` state.
 - ```("setTime", time)``` - Sets the time in seconds of each ```AnimationAction```.
-- ```("changeTimeScale", speed)``` - Changes the speed at which the ```AnimationAction``` executes. A value of 1 is normal speed, value of 2 is twice fast.
+- ```("changeTimeScale", speed)``` - Changes the speed at which the ```AnimationAction``` executes. A value of 1 is normal speed, and a value of 2 is twice fast.
 
 ## Resources
 
 - Discover three.js - Online resource to learn: https://discoverthreejs.com/
-- three.js Fourms - https://discourse.threejs.org/
+- three.js Forums - https://discourse.threejs.org/
 - My email - If you need to hire me (Elon): michaelnicol71@gmail.com
 - SimonDev - One of the best three.js experts in the world - https://www.youtube.com/channel/UCEwhtpXrg5MmwlH04ANpL8A
 

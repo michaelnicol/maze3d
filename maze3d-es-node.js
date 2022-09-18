@@ -553,7 +553,7 @@ export default class Maze3D {
         animationSlice: "height-layer", // How to slice the maze | height-layer || width-layer || depth-layer || map-distance || solve-path
         animationSliceOffset: 0, // tick before animating the next slice
         animationSliceDuration: 0.5, // How long each slice lasts
-        entrence: {
+        entrance: {
           type: "visible", // visible || slide
           distance: new three.Vector3(0, 100, 0)
         },
@@ -568,7 +568,7 @@ export default class Maze3D {
         animationSlice: "height-layer", // How to slice the maze
         animationSliceOffset: 0, // tick before animating the next slice
         animationSliceDuration: 0.5, // How long each slice lasts
-        entrence: {
+        entrance: {
           type: "visible", // visible || slide
           distance: new three.Vector3(0, 100, 0)
         },
@@ -583,7 +583,7 @@ export default class Maze3D {
         animationSlice: "height-layer", // How to slice the maze
         animationSliceOffset: 0, // tick before animating the next slice
         animationSliceDuration: 0.5, // How long each slice lasts
-        entrence: {
+        entrance: {
           type: "visible", // visible || slide
           distance: new three.Vector3(0, 100, 0)
         },
@@ -598,7 +598,7 @@ export default class Maze3D {
         animationSlice: "map-distance", // How to slice the maze
         animationSliceOffset: 0, // tick before animating the next slice
         animationSliceDuration: 0.5, // How long each slice lasts
-        entrence: {
+        entrance: {
           type: "visible", // visible || slide
           distance: new three.Vector3(0, 100, 0)
         },
@@ -613,7 +613,7 @@ export default class Maze3D {
         animationSlice: "solve-path", // How to slice the maze
         animationSliceOffset: 0, // tick before animating the next slice
         animationSliceDuration: 0.1, // How long each slice lasts
-        entrence: {
+        entrance: {
           type: "visible", // visible || slide
           distance: new three.Vector3(0, 100, 0)
         },
@@ -898,7 +898,7 @@ export default class Maze3D {
 
   /**
    * @private @function _generateVisibleKeyTrack - Internal Function: Generates a visible property key track for a slice of the maze animation.
-   * @param {Object} timeData - officialState, entrenceStartTime, entrenceEndTime, exitStartTime, exitEndTime, officialEndTime time data for the keytrack
+   * @param {Object} timeData - officialState, entranceStartTime, entranceEndTime, exitStartTime, exitEndTime, officialEndTime time data for the keytrack
    * @returns {three.BooleanKeyframeTrack} three.BooleanKeyframeTrack
    */
   _generateVisibleKeyTrack(timeData, exit) {
@@ -906,8 +906,8 @@ export default class Maze3D {
       ".visible",
       [
         timeData.officialStart,
-        timeData.entrenceStartTime,
-        timeData.entrenceEndTime,
+        timeData.entranceStartTime,
+        timeData.entranceEndTime,
         timeData.exitStartTime,
         timeData.exitEndTime,
         timeData.officialEndTime
@@ -917,46 +917,46 @@ export default class Maze3D {
   }
   /**
    * @private @function _generateSlideInKeyTrack - Internal Function: Generates a position property key track for a slice of the maze animation. Each Array<Number> should be XYZ coordinates.
-   * @param {Object} timeData - officialState, entrenceStartTime, entrenceEndTime, exitStartTime, exitEndTime, officialEndTime time data for the keytrack for each slice.
-   * @param {Array<Number>} entrenceStart - Where the slice should enter from
-   * @param {Array<Number>} entrenceEnd - Where the slice should enter to. This is the position where it will be on the maze
-   * @param {Array<Number>} exitStart - Same value as entrenceEnd.
+   * @param {Object} timeData - officialState, entranceStartTime, entranceEndTime, exitStartTime, exitEndTime, officialEndTime time data for the keytrack for each slice.
+   * @param {Array<Number>} entranceStart - Where the slice should enter from
+   * @param {Array<Number>} entranceEnd - Where the slice should enter to. This is the position where it will be on the maze
+   * @param {Array<Number>} exitStart - Same value as entranceEnd.
    * @param {Array<Number>} exitEnd - Where the slice should exit to
    * @param {Array<Number>} officialEnd - Where the slice should stay until the entire maze animation is over. Visibility is turned off via this._generateVisibleKeyTrack.
    * @returns {three.VectorKeyframeTrack} three.VectorKeyframeTrack
    */
-  _generateSlideInKeyTrack(timeData, entrenceStart, entrenceEnd, exitStart, exitEnd, officialEnd) {
+  _generateSlideInKeyTrack(timeData, entranceStart, entranceEnd, exitStart, exitEnd, officialEnd) {
     return new three.VectorKeyframeTrack(
       ".position",
       [
-        timeData.entrenceStartTime,
-        timeData.entrenceEndTime,
+        timeData.entranceStartTime,
+        timeData.entranceEndTime,
         timeData.exitStartTime,
         timeData.exitEndTime,
         timeData.officialEndTime
       ],
-      [...entrenceStart, ...entrenceEnd, ...exitStart, ...exitEnd, ...officialEnd]
+      [...entranceStart, ...entranceEnd, ...exitStart, ...exitEnd, ...officialEnd]
     );
   }
   /**
    * @private @function _runGenerateSlideInKeyTrack - Internal Function: Takes the user settings and calcuates the coordinates for the _generateSlideInKeyTrack.
-   * @param {Object} timeData - officialState, entrenceStartTime, entrenceEndTime, exitStartTime, exitEndTime, officialEndTime time data for the keytrack
-   * @param {Object} doEnter - If the object will be sliding in. If the object is not, the animation will not use the distance entrence option but instead use the same value for entrenceStart as entrenceEnd
+   * @param {Object} timeData - officialState, entranceStartTime, entranceEndTime, exitStartTime, exitEndTime, officialEndTime time data for the keytrack
+   * @param {Object} doEnter - If the object will be sliding in. If the object is not, the animation will not use the distance entrance option but instead use the same value for entranceStart as entranceEnd
    * @param {Object} doEnter - If the object will be sliding out. If the object is not, the animation will not use the distance exit option but instead use the same value for exitStart as exitEnd
    * @returns {three.VectorKeyframeTrack} Value from _generateSlideInKeyTrack
    */
   _runGenerateSlideInKeyTrack(timeData, doEnter, doExit, slice, settings) {
-    const mazePos = slice.position; //entrenceEnd, exitStart
-    const entrenceStartVecInput = doEnter
-      ? settings.entrence.distance
+    const mazePos = slice.position; //entranceEnd, exitStart
+    const entranceStartVecInput = doEnter
+      ? settings.entrance.distance
       : new three.Vector3(mazePos.x, mazePos.y, mazePos.z);
     const exitEndVecInput = doExit
       ? settings.exit.distance
       : new three.Vector3(mazePos.x, mazePos.y, mazePos.z);
-    const entrenceStartCoords = new three.Vector3(
-      mazePos.x + entrenceStartVecInput.x,
-      mazePos.y + entrenceStartVecInput.y,
-      mazePos.z + entrenceStartVecInput.z
+    const entranceStartCoords = new three.Vector3(
+      mazePos.x + entranceStartVecInput.x,
+      mazePos.y + entranceStartVecInput.y,
+      mazePos.z + entranceStartVecInput.z
     );
     const exitEndVec = new three.Vector3(
       mazePos.x + exitEndVecInput.x,
@@ -967,7 +967,7 @@ export default class Maze3D {
     const exitEndArr = [exitEndVec.x, exitEndVec.y, exitEndVec.z];
     return this._generateSlideInKeyTrack(
       timeData,
-      [entrenceStartCoords.x, entrenceStartCoords.y, entrenceStartCoords.z],
+      [entranceStartCoords.x, entranceStartCoords.y, entranceStartCoords.z],
       mazePosArr,
       mazePosArr,
       exitEndArr,
@@ -1042,7 +1042,7 @@ export default class Maze3D {
           // Find where this bank should be
           let wasPushed = false
           for (let i = 0; i < this._animationSortedInstanceCoords[targetDRC].length; i++) {
-            if (this._animationSortedInstanceCoords[targetDRC][i][0][targetCoord] < instanceCoord[targetCoord]) {
+            if (this._animationSortedInstanceCoords[targetDRC][i][0][targetCoord] > instanceCoord[targetCoord]) {
               this._animationSortedInstanceCoords[targetDRC].splice(i,0,[[...instanceCoord]])
               wasPushed = true
               break;
@@ -1171,7 +1171,7 @@ export default class Maze3D {
       // What is the current time for all items in this group to start at
       let groupItemTime = currentTime;
       // Store the end times for each group item within the group since they may be different.
-      let entrenceEndTimesArr = [];
+      let entranceEndTimesArr = [];
       // Loop through each item
       for (let groupItem of group) {
         // Set the current working time for this groupItem to the current time,
@@ -1186,21 +1186,21 @@ export default class Maze3D {
         for (let i = 0; i < Object.keys(this._animationInstances[groupItem]).length; i++) {
           // All slices start at zero
           // Set the start time of the animation to the current groupItemTime
-          // Set the end time for the entrence animation to the slice duration addation
+          // Set the end time for the entrance animation to the slice duration addation
           this._animationTimings[groupItem][i] = {
             officialStart: 0,
-            entrenceStartTime: groupItemTime,
-            entrenceEndTime: groupItemTime + animationSliceDuration
+            entranceStartTime: groupItemTime,
+            entranceEndTime: groupItemTime + animationSliceDuration
           };
           // Make sure to add the offset between slices
           groupItemTime += animationSliceDuration + animationSliceOffset;
         }
         // Save the end time for this groupItem's instance animation
-        entrenceEndTimesArr.push(groupItemTime);
+        entranceEndTimesArr.push(groupItemTime);
       }
       // End of this group
       // Set the current time to the longest animation of the this group across all items
-      currentTime = entrenceEndTimesArr.sort((a, b) => b - a)[0]; // entrence end time
+      currentTime = entranceEndTimesArr.sort((a, b) => b - a)[0]; // entrance end time
       // loop througha all of the groupitems in this group again
       let x = [];
       for (let groupItem of group) {
@@ -1274,8 +1274,8 @@ export default class Maze3D {
         // a single group item
         this._animationSliceMixers[groupItem] = {};
         let currentGroupItemSettings = this._animationOptions[groupItem];
-        // Grab the entrence and exit times for this group item
-        const { entrence, exit } = currentGroupItemSettings;
+        // Grab the entrance and exit times for this group item
+        const { entrance, exit } = currentGroupItemSettings;
         // Loop through all of the instances for a groupItem.
         for (let i = 0; i < Object.keys(this._animationInstances[groupItem]).length; i++) {
           // Create a new mixer assioated with thisinstance
@@ -1288,16 +1288,16 @@ export default class Maze3D {
           let clipTrackArr = [
             this._generateVisibleKeyTrack(timeData, currentGroupItemSettings.exit)
           ];
-          // If the entrence or exit type is a slide, then create a slide animation.
-          if (entrence.type === "slide" || exit.type === "slide") {
-            // If the entrence is slide but the exit type is visible,
+          // If the entrance or exit type is a slide, then create a slide animation.
+          if (entrance.type === "slide" || exit.type === "slide") {
+            // If the entrance is slide but the exit type is visible,
             // It will make it so both slices will slide,
             // but the exit will just slide from its current position to its current positon (doesn't move)
-            // However, the entrence will slide according to the settings.
+            // However, the entrance will slide according to the settings.
             clipTrackArr.push(
               this._runGenerateSlideInKeyTrack(
                 timeData,
-                entrence.type === "slide",
+                entrance.type === "slide",
                 exit.type === "slide",
                 this._animationInstances[groupItem][i],
                 currentGroupItemSettings
