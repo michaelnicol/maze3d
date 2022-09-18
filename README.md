@@ -2,7 +2,7 @@
 
 The internet's most in-depth 3D Maze breadth-first search algorithm.
 
-README.md for version 3.0.1
+README.md for version 3.0.2
 
 - [maze3d](#maze3d)
   - [Patch Notes](#patch-notes)
