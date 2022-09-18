@@ -41,7 +41,7 @@ README.md for version 3.0.2
 
 ## Patch Notes
 
-3.0.1 Patch notes for 3.0.1:
+3.0.1 Patch notes for 3.0.2:
 
 * Fixed the animations loading inverted due to a flipped comparison operator within the internal _sliceMaze function.
 * Changed "entrence" misspelling to "entrance."
